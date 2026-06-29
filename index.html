@@ -525,7 +525,7 @@
         .canvas-container {
             position: relative;
             width: 100%;
-            height: 250px;
+            height: 380px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -1416,7 +1416,7 @@
         if (!DOM.canvas) return;
         const dpr = window.devicePixelRatio || 1;
         const logicalWidth = DOM.canvas.parentElement.offsetWidth || 320;
-        const logicalHeight = 250;
+        const logicalHeight = 380;
 
         DOM.canvas.width = logicalWidth * dpr;
         DOM.canvas.height = logicalHeight * dpr;
@@ -1606,14 +1606,14 @@ imgDorso.onload = () => { if(AppState.currentView === 'dorso') drawHand(); };
         if (!DOM.canvas) return;
         
         // Usiamo 'pointerdown' per abbattere la latenza di 300ms dei vecchi eventi touch/click
-        DOM.canvas.addEventListener('pointerdown', function(event) {
-            const rect = DOM.canvas.getBoundingClientRect();
-            const clickX = event.clientX - rect.left;
-            const clickY = event.clientY - rect.top;
-            
-            // Scaliamo correttamente i vettori di click
-            const logicalClickX = actualToLogicalX(clickX);
-            const logicalClickY = clickY; // L'altezza è fissa a 250px sia logica che CSS
+        DOM.canvas.addEventListener('pointerdown', function(event) 
+        const rect = DOM.canvas.getBoundingClientRect();
+        const clickX = event.clientX - rect.left;
+        const clickY = event.clientY - rect.top;
+        // Scaliamo correttamente i vettori di click
+        const logicalClickX = actualToLogicalX(clickX);
+        // CORREZIONE: Adatta il calcolo proporzionale alla nuova altezza del canvas
+        const logicalClickY = (clickY / rect.height) * 380
 
             puntiPressione.forEach(punto => {
                 if (punto.vista !== AppState.currentView) return;
